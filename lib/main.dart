@@ -1,4 +1,4 @@
-import 'package:electra_sphere/screens/splash_screen.dart';
+import 'package:electra_sphere/screens/choose_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: const ChooseScreen(),
     );
   }
 }

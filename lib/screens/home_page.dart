@@ -3,6 +3,8 @@ import 'package:electra_sphere/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -14,10 +16,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 150,
+        toolbarHeight: 100,
         title: const Text(
-          'Welcome !',
-          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+          'ElectraSphere',
+          style: TextStyle(
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: Padding(
@@ -29,6 +34,16 @@ class _HomePageState extends State<HomePage> {
               // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Text(
+                  'Welcome!',
+                  style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.purple),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
                 const Text(
                   'Why are you here for?',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -65,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 ListTile(
-                  title: Text('Elective',
+                  title: const Text('Candidature',
                       style: TextStyle(
                           fontSize: 24, fontWeight: FontWeight.normal)),
                   leading: Radio(
@@ -90,17 +105,17 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignUpScreen()));
+                                  builder: (context) => const SignUpScreen()));
                         } else if (_role == 'voter') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => NotificationsScreen()));
+                                  builder: (context) => const NotificationsScreen()));
                         } else if (_role == 'elective') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => NotificationsScreen()));
+                                  builder: (context) => const NotificationsScreen()));
                         }
                       },
 

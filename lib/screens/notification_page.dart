@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NotificationsScreen extends StatefulWidget {
+  const NotificationsScreen({super.key});
+
   @override
   _NotificationsScreenState createState() => _NotificationsScreenState();
 }
@@ -18,8 +20,17 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("Notifications"),
+        backgroundColor: Colors.black,
+        leading: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
+        title: const Text(
+          "Notifications",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: ListView.builder(
         itemCount: notifications.length,
@@ -32,7 +43,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             child: ListTile(
               title: Text(notifications[index]),
               trailing: IconButton(
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 onPressed: () {
                   setState(() {
                     notifications.removeAt(index);

@@ -31,7 +31,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign Up')),
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        leading: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
+        title: const Text(
+          'Sign Up',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SizedBox(
@@ -143,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                ClassSearchScreen(),
+                                                const ClassSearchScreen(),
                                           ));
                                       if (_signUpFormKey.currentState!
                                               .validate() &&

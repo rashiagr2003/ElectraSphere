@@ -3,6 +3,8 @@ import 'package:electra_sphere/screens/home_page.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -11,10 +13,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 10), () {
+    Timer(const Duration(seconds: 10), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     });
 
@@ -37,10 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 200,
               height: 80,
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
-            Text(
+            const Text(
               'ElectraSphere',
               style: TextStyle(
                 fontSize: 32,

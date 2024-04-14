@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ClassSearchScreen extends StatefulWidget {
+  const ClassSearchScreen({super.key});
+
   @override
   _ClassSearchScreenState createState() => _ClassSearchScreenState();
 }
@@ -40,10 +42,10 @@ class _ClassSearchScreenState extends State<ClassSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Class"),
+        title: const Text("Class"),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               setState(() {
                 isSearching = true;
@@ -59,7 +61,7 @@ class _ClassSearchScreenState extends State<ClassSearchScreen> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: searchController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Search",
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(),
@@ -89,7 +91,7 @@ class _ClassSearchScreenState extends State<ClassSearchScreen> {
               ),
             ),
           if (filteredClassMembers.isEmpty && isSearching)
-            Center(
+            const Center(
               child: Text("No results found"),
             ),
         ],
