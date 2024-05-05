@@ -10,7 +10,7 @@ class ChooseCRWidget extends StatefulWidget {
 class _ChooseCRWidgetState extends State<ChooseCRWidget> {
   List<String> _classRepresentative = ['Naman', 'Dhakad'];
   List<String> _promises = [
-    'I will give my best',
+    'I will give my best ',
     'Try to maintain discipline'
   ];
   List<String> _selectedCR = [];
@@ -40,7 +40,7 @@ class _ChooseCRWidgetState extends State<ChooseCRWidget> {
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Center(
                       child: Text(
-                        _promises[0],
+                        _promises[index],
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

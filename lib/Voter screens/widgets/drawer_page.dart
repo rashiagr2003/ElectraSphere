@@ -20,7 +20,7 @@ class _DrawerPageState extends State<DrawerPage> {
         children: [
           const DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: Color(0xffE76239),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

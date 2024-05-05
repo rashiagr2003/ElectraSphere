@@ -20,16 +20,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color(0xffE76239),
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         leading: const Icon(
           Icons.arrow_back,
-          color: Colors.white,
+          color: Colors.black,
         ),
         title: const Text(
           "Notifications",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
       ),
       body: ListView.builder(
@@ -43,7 +43,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             child: ListTile(
               title: Text(notifications[index]),
               trailing: IconButton(
-                icon: const Icon(Icons.delete),
+                icon: const Icon(Icons.delete, color: Color(0xffE76239)),
                 onPressed: () {
                   setState(() {
                     notifications.removeAt(index);

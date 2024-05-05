@@ -1,15 +1,16 @@
-import 'package:electra_sphere/screens/notification_page.dart';
-import 'package:electra_sphere/screens/sign_up.dart';
+import 'package:electra_sphere/Voter%20screens/choose_cr_screen.dart';
+import 'package:electra_sphere/Common%20Screens/notification_page.dart';
+import 'package:electra_sphere/Admin%20screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ChooseScreen extends StatefulWidget {
+  const ChooseScreen({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _ChooseScreenState createState() => _ChooseScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ChooseScreenState extends State<ChooseScreen> {
   var _role;
 
   @override
@@ -39,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
-                      color: Colors.purple),
+                      color: Color(0xffE76239)),
                 ),
                 const SizedBox(
                   height: 30,
@@ -110,12 +111,14 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const NotificationsScreen()));
+                                  builder: (context) =>
+                                      const ChooseCRScreen()));
                         } else if (_role == 'elective') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const NotificationsScreen()));
+                                  builder: (context) =>
+                                      const NotificationsScreen()));
                         }
                       },
 

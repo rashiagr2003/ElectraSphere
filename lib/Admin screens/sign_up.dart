@@ -1,4 +1,3 @@
-import 'package:electra_sphere/screens/search_class_page.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -31,17 +30,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color(0xffE76239),
       appBar: AppBar(
         leading: const Icon(
           Icons.arrow_back,
-          color: Colors.white,
+          color: Colors.black,
         ),
         title: const Text(
           'Sign Up',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -150,12 +149,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 children: [
                                   ElevatedButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ClassSearchScreen(),
-                                          ));
                                       if (_signUpFormKey.currentState!
                                               .validate() &&
                                           _acceptTermsAndConditions) {

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:electra_sphere/screens/home_page.dart';
+import 'package:electra_sphere/choose_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 10), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const ChooseScreen()),
       );
     });
 

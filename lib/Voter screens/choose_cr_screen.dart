@@ -1,19 +1,27 @@
-import 'package:electra_sphere/screens/widgets/choose_cr_widget.dart';
-import 'package:electra_sphere/screens/widgets/drawer_page.dart';
+import 'package:electra_sphere/Voter%20screens/widgets/choose_cr_widget.dart';
+import 'package:electra_sphere/Voter%20screens/widgets/drawer_page.dart';
+import 'package:electra_sphere/common%20Screens/notification_page.dart';
 import 'package:flutter/material.dart';
 
-class ChooseScreen extends StatelessWidget {
-  const ChooseScreen({super.key});
+class ChooseCRScreen extends StatelessWidget {
+  const ChooseCRScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xffE76239),
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: const Center(child: Text('Vote your C.R.')),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.notifications))
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationsScreen()));
+                },
+                icon: const Icon(Icons.notifications))
           ],
         ),
         drawer: DrawerPage(),
