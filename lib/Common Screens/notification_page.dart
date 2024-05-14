@@ -23,10 +23,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       backgroundColor: Color(0xffE76239),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: const Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-        ),
         title: const Text(
           "Notifications",
           style: TextStyle(color: Colors.black),

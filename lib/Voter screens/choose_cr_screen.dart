@@ -1,3 +1,4 @@
+import 'package:electra_sphere/Voter%20screens/successfully_voted.dart';
 import 'package:electra_sphere/Voter%20screens/widgets/choose_cr_widget.dart';
 import 'package:electra_sphere/Voter%20screens/widgets/drawer_page.dart';
 import 'package:electra_sphere/common%20Screens/notification_page.dart';
@@ -47,15 +48,23 @@ class ChooseCRScreen extends StatelessWidget {
                 height: 60,
                 width: 180,
                 decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: Color(0xffEEEEEE).withOpacity(0.4),
                     borderRadius: BorderRadius.circular(20)),
-                child: const Center(
-                    child: Text(
-                  "Submit",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                )),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SuccessfullyVotedScreen()));
+                  },
+                  child: const Center(
+                      child: Text(
+                    "Submit",
+                    style: TextStyle(
+                      color: Color(0xffE76239),
+                    ),
+                  )),
+                ),
               )
             ],
           ),

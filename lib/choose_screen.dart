@@ -1,16 +1,18 @@
-import 'package:electra_sphere/Voter%20screens/choose_cr_screen.dart';
-import 'package:electra_sphere/Common%20Screens/notification_page.dart';
+import 'package:electra_sphere/Candidature%20Screens/cr_sign_up_screen.dart';
 import 'package:electra_sphere/Admin%20screens/sign_up.dart';
+import 'package:electra_sphere/Voter%20screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 class ChooseScreen extends StatefulWidget {
   const ChooseScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ChooseScreenState createState() => _ChooseScreenState();
 }
 
 class _ChooseScreenState extends State<ChooseScreen> {
+  // ignore: prefer_typing_uninitialized_variables
   var _role;
 
   @override
@@ -111,14 +113,12 @@ class _ChooseScreenState extends State<ChooseScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ChooseCRScreen()));
+                                  builder: (context) => VoterSignUpScreen()));
                         } else if (_role == 'elective') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const NotificationsScreen()));
+                                  builder: (context) => CRSignUpScreen()));
                         }
                       },
 
