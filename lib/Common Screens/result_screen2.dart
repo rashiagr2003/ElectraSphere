@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
+import 'pie_chart_widget.dart';
+
+// ignore: must_be_immutable
 class ResultsScreen extends StatelessWidget {
   final List<Map<String, dynamic>> crList;
 
-  ResultsScreen({required this.crList});
+  ResultsScreen({super.key, required this.crList});
 
   @override
   Widget build(BuildContext context) {
@@ -12,19 +14,34 @@ class ResultsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('CR Elections Results'),
+        leading: const Image(image: AssetImage("assets/manipal_logo.png")),
+        title: const Text('CR Elections Results'),
       ),
       body: Column(
         children: [
-          Container(
-            height: 300,
-            child: charts.PieChart(
-              _createSeriesData(crData),
-              animate: true,
-              animationDuration: Duration(seconds: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            child: SizedBox(
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 10),
+                      color: const Color(0xffE76239),
+                      child: const Text('Class')),
+                  Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 10),
+                      color: const Color(0xffE76239),
+                      child: const Text('Sec')),
+                ],
+              ),
             ),
           ),
-          Text(
+          const PieChartWidget(),
+          const Text(
             'Total Students: 65\nTotal Votes: 55',
             style: TextStyle(fontSize: 16),
           ),
@@ -33,12 +50,17 @@ class ResultsScreen extends StatelessWidget {
               itemCount: crData.length,
               itemBuilder: (context, index) {
                 return Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('C.R. ${crData[index].name}'),
-                      Text('${crData[index].votes}%'),
+                      Text('${crData[index].name}'),
+                      Column(
+                        children: [
+                          Text('${crData[index].votes}%'),
+                          Text('[Number of votes]'),
+                        ],
+                      )
                     ],
                   ),
                 );
@@ -46,10 +68,10 @@ class ResultsScreen extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Text(
-              'WINNER: C.R. ${_getWinner(crData)}',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              'WINNER:  ${_getWinner(crData)}',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -67,29 +89,13 @@ class ResultsScreen extends StatelessWidget {
     return crData;
   }
 
-  List<charts.Series<CR, String>> _createSeriesData(List<CR> crData) {
-    final List<charts.Series<CR, String>> seriesData = [];
-
-    seriesData.add(
-      charts.Series(
-        domainFn: (CR cr, _) => cr.name,
-        measureFn: (CR cr, _) => cr.votes,
-        id: 'CR Votes',
-        data: crData,
-        labelAccessorFn: (CR row, _) => '${row.votes}%',
-      ),
-    );
-
-    return seriesData;
-  }
-
   String _getWinner(List<CR> crData) {
     double maxVotes = 0;
     String winner = '';
 
     for (var cr in crData) {
-      if (cr.votes > maxVotes) {
-        maxVotes = cr.votes as double;
+      if (cr.votes.toDouble() > maxVotes) {
+        maxVotes = cr.votes.toDouble();
         winner = cr.name;
       }
     }

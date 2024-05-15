@@ -1,5 +1,5 @@
+import 'package:electra_sphere/Candidature%20Screens/candidature_reset_password.dart';
 import 'package:electra_sphere/Candidature%20Screens/home_page.dart';
-import 'package:electra_sphere/Voter%20screens/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -76,7 +76,7 @@ class _CandidatureLoginScreenState extends State<CandidatureLoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              ResetPasswordScreen()));
+                                              CandidatureResetPasswordScreen()));
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),

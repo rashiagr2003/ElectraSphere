@@ -10,8 +10,8 @@ class ResultScreen1 extends StatefulWidget {
 class _MyHomePageState extends State<ResultScreen1> {
   List<Map<String, dynamic>> crList = [
     {'name': 'C.R. 1', 'votes': 45},
-    {'name': 'C.R. 2', 'votes': 45},
-    {'name': 'C.R. 3', 'votes': 45},
+    {'name': 'C.R. 2', 'votes': 60},
+    {'name': 'C.R. 3', 'votes': 50},
   ];
 
   void _navigateToResults() {

@@ -1,6 +1,4 @@
 import 'package:electra_sphere/Candidature%20Screens/home_page.dart';
-import 'package:electra_sphere/Voter%20screens/choose_cr_screen.dart';
-// import 'package:electra_sphere/Voter%20screens/successfully_voted.dart';
 import 'package:flutter/material.dart';
 
 class CandidatureResetPasswordScreen extends StatefulWidget {
@@ -65,19 +63,16 @@ class _CandidatureResetPasswordScreenState
                                   padding: const EdgeInsets.all(30.0),
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CandidatureHomePage()));
-                                      if (_formKey.currentState!.validate()) {
+                                      String email = _emailController.text;
+                                      if (_formKey.currentState!.validate() ||
+                                          email.endsWith("@muj.manipal.edu")) {
                                         _formKey.currentState!.save();
                                         // Perform login here
-                                        String email = _emailController.text;
-
-                                        // Use email and password as needed
-                                        if (email
-                                            .endsWith("@muj.manipal.edu")) {}
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CandidatureHomePage()));
                                       }
                                     },
                                     child: Text('Verify'),

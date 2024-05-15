@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_dropdown: ^1.0.1+hotfix.1
   dropdown_textfield: ^1.0.8
-  charts_flutter:
+  pie_chart:
 
 dev_dependencies:
   flutter_test:

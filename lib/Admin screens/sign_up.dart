@@ -1,3 +1,4 @@
+import 'package:electra_sphere/Admin%20screens/publish_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -16,6 +17,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _confirmPasswordController = TextEditingController();
   final _departmentController = TextEditingController();
   bool _acceptTermsAndConditions = false;
+  List<Map<String, dynamic>> crList = [
+    {'name': 'C.R. 1', 'votes': 45},
+    {'name': 'C.R. 2', 'votes': 60},
+    {'name': 'C.R. 3', 'votes': 50},
+  ];
 
   @override
   void dispose() {
@@ -79,9 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Please confirm your email';
                               }
-                              if (value != _nameController.text) {
-                                return 'Email and Confirm Email must match';
-                              }
+
                               return null;
                             },
                           ),
@@ -91,12 +95,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 const InputDecoration(labelText: 'Password'),
                             obscureText: true,
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a password';
-                              }
-                              if (value.length < 6) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.length < 6) {
                                 return 'Password must be at least 6 characters long';
                               }
+
                               return null;
                             },
                           ),
@@ -108,9 +112,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please confirm your password';
-                              }
-                              if (value != _passwordController.text) {
-                                return 'Password and Confirm Password must match';
                               }
                               return null;
                             },
@@ -152,6 +153,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       if (_signUpFormKey.currentState!
                                               .validate() &&
                                           _acceptTermsAndConditions) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ResultsPublishScreen(
+                                                        crList: crList)));
                                         // Sign up
                                       }
                                     },

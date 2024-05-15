@@ -1,7 +1,5 @@
 import 'package:electra_sphere/Common%20Screens/result_screen1.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import '../Common Screens/notification_page.dart';
 import '../Voter screens/widgets/drawer_page.dart';
 
@@ -13,10 +11,27 @@ class CandidatureHomePage extends StatefulWidget {
 }
 
 class _CandidatureHomePageState extends State<CandidatureHomePage> {
+  static final List<Map<String, dynamic>> crList = [
+    {'name': 'C.R. 1', 'votes': 45},
+    {'name': 'C.R. 2', 'votes': 60},
+    {'name': 'C.R. 3', 'votes': 50},
+  ];
+
+  late List<CR> crData;
+
+  @override
+  void initState() {
+    super.initState();
+    crData = _createCRData(crList);
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<CR> crData = _createCRData(crList);
+    // ...
+
     return Scaffold(
-        backgroundColor: Color(0xffE76239),
+        backgroundColor: const Color(0xffE76239),
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: const Center(child: Text('Home')),
@@ -26,12 +41,12 @@ class _CandidatureHomePageState extends State<CandidatureHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NotificationsScreen()));
+                          builder: (context) => const NotificationsScreen()));
                 },
                 icon: const Icon(Icons.notifications))
           ],
         ),
-        drawer: DrawerPage(),
+        drawer: const DrawerPage(),
         body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: SizedBox(
@@ -67,17 +82,21 @@ class _CandidatureHomePageState extends State<CandidatureHomePage> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                  padding: EdgeInsets.symmetric(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
                                                       vertical: 6,
                                                       horizontal: 10),
-                                                  color: Color(0xffE76239),
-                                                  child: Text('Class')),
+                                                  color:
+                                                      const Color(0xffE76239),
+                                                  child: const Text('Class')),
                                               Container(
-                                                  padding: EdgeInsets.symmetric(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
                                                       vertical: 6,
                                                       horizontal: 10),
-                                                  color: Color(0xffE76239),
-                                                  child: Text('Sec')),
+                                                  color:
+                                                      const Color(0xffE76239),
+                                                  child: const Text('Sec')),
                                             ],
                                           ),
                                         ),
@@ -86,6 +105,7 @@ class _CandidatureHomePageState extends State<CandidatureHomePage> {
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 16, horizontal: 8),
                                         child: ListView.builder(
+                                          scrollDirection: Axis.vertical,
                                           itemCount: 3,
                                           itemBuilder: (context, index) {
                                             return Padding(
@@ -108,12 +128,13 @@ class _CandidatureHomePageState extends State<CandidatureHomePage> {
                                                                 .size
                                                                 .width *
                                                             0.5,
-                                                        child: const Column(
+                                                        child: Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .end,
                                                           children: [
-                                                            Text('45% votes'),
+                                                            Text(
+                                                                '${crData[index].votes} % votes'),
                                                             Text(
                                                                 '[Number of votes]'),
                                                           ],
@@ -127,12 +148,13 @@ class _CandidatureHomePageState extends State<CandidatureHomePage> {
                                                               .size
                                                               .width,
                                                       height: 60,
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 6,
-                                                              horizontal: 10),
-                                                      color: Color(0xffEEEEEE),
-                                                      child: Text(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 6,
+                                                          horizontal: 10),
+                                                      color: const Color(
+                                                          0xffEEEEEE),
+                                                      child: const Text(
                                                         'Promises',
                                                         style: TextStyle(
                                                             color: Colors.black,
@@ -153,4 +175,21 @@ class _CandidatureHomePageState extends State<CandidatureHomePage> {
                   ],
                 ))));
   }
+}
+
+class CR {
+  final String name;
+  final int votes;
+
+  CR(this.name, this.votes);
+}
+
+List<CR> _createCRData(List<Map<String, dynamic>> crList) {
+  List<CR> crData = [];
+
+  for (var cr in crList) {
+    crData.add(CR(cr['name'], cr['votes']));
+  }
+
+  return crData;
 }
