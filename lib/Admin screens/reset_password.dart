@@ -1,12 +1,11 @@
-import 'package:electra_sphere/Voter%20screens/choose_cr_screen.dart';
 import 'package:flutter/material.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
+class AdminResetPasswordScreen extends StatefulWidget {
   @override
-  _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
+  _AdminResetPasswordScreenState createState() => _AdminResetPasswordScreenState();
 }
 
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+class _AdminResetPasswordScreenState extends State<AdminResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
 
@@ -75,12 +74,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                   String email = _emailController.text;
                                   // Use email as needed
                                   if (email.endsWith("@muj.manipal.edu")) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChooseCRScreen(),
-                                      ),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => ChooseCRScreen(),
+                                    //   ),
+                                    // );
                                   }
                                 }
                               },

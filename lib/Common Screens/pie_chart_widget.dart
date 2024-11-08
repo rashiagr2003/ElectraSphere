@@ -7,31 +7,37 @@ class PieChartWidget extends StatefulWidget {
   const PieChartWidget({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _PieChartWidgetState createState() => _PieChartWidgetState();
 }
 
 class _PieChartWidgetState extends State<PieChartWidget> {
-  // ...
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        if (constraints.maxWidth >= 600) {
+        double width = constraints.maxWidth;
+
+        // Define a factor based on screen width for scaling
+        double chartRadiusFactor = width > 600
+            ? 0.3
+            : 0.4; // For larger screens, reduce the chart size
+        double cardMargin =
+            width > 600 ? 12.0 : 8.0; // Adjust margin for smaller screens
+
+        if (width >= 600) {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
                 flex: 3,
                 fit: FlexFit.tight,
-                child: _buildChart(),
+                child: _buildChart(chartRadiusFactor),
               ),
               Flexible(
                 flex: 2,
                 fit: FlexFit.tight,
-                child: _buildSettings(),
-              )
+                child: _buildSettings(cardMargin),
+              ),
             ],
           );
         } else {
@@ -39,10 +45,10 @@ class _PieChartWidgetState extends State<PieChartWidget> {
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 32),
-                  child: _buildChart(),
+                  margin: EdgeInsets.symmetric(vertical: 32),
+                  child: _buildChart(chartRadiusFactor),
                 ),
-                _buildSettings(),
+                _buildSettings(cardMargin),
               ],
             ),
           );
@@ -51,31 +57,31 @@ class _PieChartWidgetState extends State<PieChartWidget> {
     );
   }
 
-  Widget _buildChart() {
+  Widget _buildChart(double chartRadiusFactor) {
     return PieChart(
       dataMap: const {
         "CR1": 17,
         "CR2": 18,
         "CR3": 20,
       },
-      animationDuration: Duration(milliseconds: 800),
+      animationDuration: const Duration(milliseconds: 800),
       chartLegendSpacing: 32,
-      chartRadius: math.min(MediaQuery.of(context).size.width / 3.2, 300),
+      chartRadius:
+          math.min(MediaQuery.of(context).size.width * chartRadiusFactor, 300),
       colorList: const [
-        const Color(0xff000000),
-        const Color(0xffEEEEEE),
-        const Color(0xffE76239),
+        Color(0xff000000),
+        Color(0xffEEEEEE),
+        Color(0xffE76239),
       ],
-      // ...
     );
   }
 
-  Widget _buildSettings() {
-    return const Card(
-      margin: EdgeInsets.all(12),
+  Widget _buildSettings(double cardMargin) {
+    return Card(
+      margin: EdgeInsets.all(cardMargin),
       child: Column(
-        children: [
-          // ...
+        children: const [
+          // Add other settings UI elements as needed
         ],
       ),
     );
@@ -87,12 +93,19 @@ class PieChartWidget2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    // Use a factor to scale the chart based on screen width
+    double chartRadiusFactor =
+        screenWidth > 600 ? 0.25 : 0.35; // Adjust for small/large screens
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Pie Chart 1"),
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.04), // Add some dynamic padding
         child: PieChart(
           dataMap: const {"Flutter": 5},
           chartType: ChartType.ring,
@@ -102,6 +115,8 @@ class PieChartWidget2 extends StatelessWidget {
             showChartValuesInPercentage: true,
           ),
           totalValue: 20,
+          chartRadius: math.min(screenWidth * chartRadiusFactor,
+              250), // Ensure the chart size is appropriate
         ),
       ),
     );

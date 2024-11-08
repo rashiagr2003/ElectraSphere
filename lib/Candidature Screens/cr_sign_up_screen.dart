@@ -1,4 +1,3 @@
-import 'package:electra_sphere/Candidature%20Screens/claim_screen.dart';
 import 'package:electra_sphere/Candidature%20Screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
@@ -16,11 +15,10 @@ class _CRSignUpScreenState extends State<CRSignUpScreen> {
   final _mobileNumberController = TextEditingController();
   final _createPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  FocusNode searchFocusNode = FocusNode();
-  FocusNode textFieldFocusNode = FocusNode();
+  bool _acceptTermsAndConditions = false;
+
   late SingleValueDropDownController _cnt;
   late MultiValueDropDownController _cntMulti;
-  bool _acceptTermsAndConditions = false;
 
   @override
   void initState() {
@@ -38,192 +36,166 @@ class _CRSignUpScreenState extends State<CRSignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0xffE76239),
-        appBar: AppBar(
-          title: Text('Sign Up'),
-        ),
-        body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.85,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Responsive width and padding adjustments
+        double containerWidth = constraints.maxWidth > 600
+            ? 500
+            : constraints.maxWidth * 0.9;
+        double verticalPadding = constraints.maxHeight * 0.02;
+
+        return Scaffold(
+          backgroundColor: const Color(0xffE76239),
+          appBar: AppBar(
+            title: const Text('Sign Up'),
+          ),
+          body: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: verticalPadding, horizontal: 16),
+              child: SizedBox(
+                width: containerWidth,
                 child: Card(
-                    surfaceTintColor: Colors.white,
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 16),
-                          child: Form(
-                            key: _signUpFormKey,
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                  controller: _nameController,
-                                  decoration:
-                                      const InputDecoration(labelText: 'Name'),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your name';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  controller: _outlookIDController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'Outlook Id'),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please confirm your email';
-                                    }
-
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  controller: _cgpaController,
-                                  decoration:
-                                      const InputDecoration(labelText: 'CGPA'),
-                                  validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty ||
-                                        double.parse(_cgpaController.text) <
-                                            8.5) {
-                                      return 'must be >=8.5';
-                                    }
-
-                                    return null;
-                                  },
-                                ),
-                                DropDownTextField(
-                                  textFieldDecoration: InputDecoration(
-                                      labelText: "Select Class"),
-                                  controller: _cnt,
-                                  clearOption: true,
-                                  searchDecoration:
-                                      const InputDecoration(hintText: "Class"),
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return "Required field";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  dropDownItemCount: 6,
-                                  dropDownList: const [
-                                    DropDownValueModel(
-                                        name: 'IT-6E', value: "value1"),
-                                    DropDownValueModel(
-                                        name: 'IT-6A',
-                                        value: "IT-6B",
-                                        toolTipMsg:
-                                            "DropDownButton is a widget that we can use to select one unique value from a set of values"),
-                                    DropDownValueModel(
-                                        name: 'IT-6C', value: "value5"),
-                                    DropDownValueModel(
-                                        name: 'IT-6D', value: "value6"),
-                                  ],
-                                  onChanged: (val) {},
-                                ),
-                                TextFormField(
-                                  controller: _mobileNumberController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'Mobile Number'),
-                                  validator: (value) {
-                                    if (value == null ||
-                                        _mobileNumberController.text.length !=
-                                            10 ||
-                                        value.isEmpty) {
-                                      return 'Please write the correct number';
-                                    }
-
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  controller: _createPasswordController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'Create Password'),
-                                  validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty ||
-                                        double.parse(_createPasswordController
-                                                .text) <
-                                            8) {
-                                      return 'Please enter at least 8 characters';
-                                    }
-
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  controller: _confirmPasswordController,
-                                  decoration: const InputDecoration(
-                                      labelText: 'Confirm Password'),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter correct password';
-                                    }
-
-                                    return null;
-                                  },
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  child: CheckboxListTile(
-                                    value: _acceptTermsAndConditions,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _acceptTermsAndConditions = value!;
-                                      });
+                  elevation: 5,
+                  surfaceTintColor: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        child: Form(
+                          key: _signUpFormKey,
+                          child: Column(
+                            children: [
+                              _buildTextFormField(
+                                controller: _nameController,
+                                label: 'Name',
+                                validatorMsg: 'Please enter your name',
+                              ),
+                              _buildTextFormField(
+                                controller: _outlookIDController,
+                                label: 'Outlook Id',
+                                validatorMsg: 'Please confirm your email',
+                              ),
+                              _buildTextFormField(
+                                controller: _cgpaController,
+                                label: 'CGPA',
+                                validatorMsg: 'must be >=8.5',
+                                isNumeric: true,
+                              ),
+                              DropDownTextField(
+                                textFieldDecoration:
+                                    const InputDecoration(labelText: "Select Class"),
+                                controller: _cnt,
+                                clearOption: true,
+                                searchDecoration:
+                                    const InputDecoration(hintText: "Class"),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return "Required field";
+                                  }
+                                  return null;
+                                },
+                                dropDownItemCount: 6,
+                                dropDownList: const [
+                                  DropDownValueModel(name: 'IT-6E', value: "value1"),
+                                  DropDownValueModel(name: 'IT-6A', value: "IT-6B"),
+                                  DropDownValueModel(name: 'IT-6C', value: "value5"),
+                                  DropDownValueModel(name: 'IT-6D', value: "value6"),
+                                ],
+                                onChanged: (val) {},
+                              ),
+                              _buildTextFormField(
+                                controller: _mobileNumberController,
+                                label: 'Mobile Number',
+                                validatorMsg: 'Please write the correct number',
+                                isNumeric: true,
+                                maxLength: 10,
+                              ),
+                              _buildTextFormField(
+                                controller: _createPasswordController,
+                                label: 'Create Password',
+                                validatorMsg: 'Please enter at least 8 characters',
+                                isPassword: true,
+                              ),
+                              _buildTextFormField(
+                                controller: _confirmPasswordController,
+                                label: 'Confirm Password',
+                                validatorMsg: 'Please enter correct password',
+                                isPassword: true,
+                              ),
+                              CheckboxListTile(
+                                value: _acceptTermsAndConditions,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _acceptTermsAndConditions = value!;
+                                  });
+                                },
+                                title: const Text(
+                                    'I accept the Terms and Conditions'),
+                                controlAffinity: ListTileControlAffinity.leading,
+                                activeColor: const Color(0xffE76239),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (_signUpFormKey.currentState!.validate()) {
+                                    // Perform sign-up logic here
+                                  }
+                                },
+                                child: const Text('Sign Up'),
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text('Already have an account?'),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CandidatureLoginScreen()));
                                     },
-                                    title: const Text(
-                                        'I accept the Terms and Conditions'),
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    activeColor: const Color(0xffE76239),
+                                    child: const Text('Login'),
                                   ),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ClaimScreen()));
-                                    if (_signUpFormKey.currentState!
-                                        .validate()) {}
-                                  },
-                                  child: Text('SignUp'),
-                                ),
-                                const SizedBox(
-                                  height: 16,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text('Already have an account?'),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: ((context) =>
-                                                    CandidatureLoginScreen())));
-                                      },
-                                      child: Text('Login'),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    )))));
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // Reusable text field builder for easy customization and consistency
+  Widget _buildTextFormField({
+    required TextEditingController controller,
+    required String label,
+    required String validatorMsg,
+    bool isPassword = false,
+    bool isNumeric = false,
+    int? maxLength,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(labelText: label),
+      validator: (value) {
+        if (value == null || value.isEmpty) return validatorMsg;
+        return null;
+      },
+      keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
+      obscureText: isPassword,
+      maxLength: maxLength,
+    );
   }
 }

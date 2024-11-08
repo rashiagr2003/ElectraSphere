@@ -27,153 +27,168 @@ class _CandidatureHomePageState extends State<CandidatureHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<CR> crData = _createCRData(crList);
-    // ...
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: const Color(0xffE76239),
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Center(child: Text('Home')),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationsScreen()));
-                },
-                icon: const Icon(Icons.notifications))
-          ],
-        ),
-        drawer: const DrawerPage(),
-        body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.8,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => ResultScreen1()))),
-                      child: Card(
-                          surfaceTintColor: Colors.white,
-                          elevation: 5,
-                          child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SingleChildScrollView(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 16),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 15),
-                                        child: SizedBox(
-                                          height: 50,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 6,
-                                                      horizontal: 10),
-                                                  color:
-                                                      const Color(0xffE76239),
-                                                  child: const Text('Class')),
-                                              Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 6,
-                                                      horizontal: 10),
-                                                  color:
-                                                      const Color(0xffE76239),
-                                                  child: const Text('Sec')),
-                                            ],
-                                          ),
-                                        ),
+      backgroundColor: const Color(0xffE76239),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Center(child: Text('Home')),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationsScreen()),
+              );
+            },
+            icon: const Icon(Icons.notifications),
+          ),
+        ],
+      ),
+      drawer: const DrawerPage(),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: screenHeight * 0.01, horizontal: screenWidth * 0.04),
+        child: SizedBox(
+          height: screenHeight * 0.8,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: ((context) => ResultScreen1())),
+                ),
+                child: Card(
+                  surfaceTintColor: Colors.white,
+                  elevation: 5,
+                  child: Padding(
+                    padding: EdgeInsets.all(screenWidth * 0.02),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.02,
+                          horizontal: screenWidth * 0.04,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenHeight * 0.02),
+                              child: SizedBox(
+                                height: screenHeight * 0.07,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: screenHeight * 0.008,
+                                        horizontal: screenWidth * 0.025,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16, horizontal: 8),
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: 3,
-                                          itemBuilder: (context, index) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 17),
+                                      color: const Color(0xffE76239),
+                                      child: const Text('Class'),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: screenHeight * 0.008,
+                                        horizontal: screenWidth * 0.025,
+                                      ),
+                                      color: const Color(0xffE76239),
+                                      child: const Text('Sec'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: screenHeight * 0.02,
+                                horizontal: screenWidth * 0.02,
+                              ),
+                              child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: crData.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: screenHeight * 0.02),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              crData[index].name,
+                                              style: TextStyle(
+                                                fontSize: screenHeight * 0.02,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: screenWidth * 0.5,
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.end,
                                                 children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                          'C.R. ${index + 1} '),
-                                                      SizedBox(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.5,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
-                                                                '${crData[index].votes} % votes'),
-                                                            Text(
-                                                                '[Number of votes]'),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
+                                                  Text(
+                                                    '${crData[index].votes} % votes',
+                                                    style: TextStyle(
+                                                        fontSize: screenHeight *
+                                                            0.018),
                                                   ),
-                                                  Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      height: 60,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 6,
-                                                          horizontal: 10),
-                                                      color: const Color(
-                                                          0xffEEEEEE),
-                                                      child: const Text(
-                                                        'Promises',
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 24),
-                                                      )),
+                                                  Text(
+                                                    '[Number of votes]',
+                                                    style: TextStyle(
+                                                        fontSize: screenHeight *
+                                                            0.016),
+                                                  ),
                                                 ],
                                               ),
-                                            );
-                                          },
-                                          shrinkWrap: true,
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ))),
+                                        Container(
+                                          width: screenWidth,
+                                          height: screenHeight * 0.08,
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: screenHeight * 0.008,
+                                            horizontal: screenWidth * 0.025,
+                                          ),
+                                          color: const Color(0xffEEEEEE),
+                                          child: const Text(
+                                            'Promises',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 24,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                shrinkWrap: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ],
-                ))));
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

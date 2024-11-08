@@ -19,32 +19,45 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen width and height for responsiveness
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final fontSizeFactor = screenWidth / 375; // Reference width: 375
+    final paddingFactor = screenWidth / 375;
+
     return Scaffold(
       backgroundColor: Color(0xffE76239),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text(
+        title: Text(
           "Notifications",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black, fontSize: 18 * fontSizeFactor),
         ),
       ),
       body: ListView.builder(
         itemCount: notifications.length,
         itemBuilder: (context, index) {
-          return Card(
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListTile(
-              title: Text(notifications[index]),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete, color: Color(0xffE76239)),
-                onPressed: () {
-                  setState(() {
-                    notifications.removeAt(index);
-                  });
-                },
+          return Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: 8 * paddingFactor, horizontal: 16 * paddingFactor),
+            child: Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text(
+                  notifications[index],
+                  style: TextStyle(fontSize: 16 * fontSizeFactor),
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete, color: Color(0xffE76239)),
+                  onPressed: () {
+                    setState(() {
+                      notifications.removeAt(index);
+                    });
+                  },
+                ),
               ),
             ),
           );

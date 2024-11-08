@@ -7,57 +7,73 @@ class ChooseScreen extends StatefulWidget {
   const ChooseScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _ChooseScreenState createState() => _ChooseScreenState();
 }
 
 class _ChooseScreenState extends State<ChooseScreen> {
-  // ignore: prefer_typing_uninitialized_variables
   var _role;
 
   @override
   Widget build(BuildContext context) {
+    // Get screen width and height for responsive design
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    // Adjust font sizes proportionally based on screen size
+    double titleFontSize = screenWidth * 0.08; // 8% of screen width
+    double subTitleFontSize = screenWidth * 0.06; // 6% of screen width
+    double listTileFontSize = screenWidth * 0.06; // 6% of screen width
+    double buttonFontSize = screenWidth * 0.06; // 6% of screen width
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
-        title: const Text(
+        title: Text(
           'ElectraSphere',
           style: TextStyle(
-            fontSize: 40,
+            fontSize: titleFontSize, // Responsive font size
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(screenWidth * 0.04), // Proportional padding
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Welcome!',
                   style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xffE76239)),
+                    fontSize: titleFontSize, // Responsive font size
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xffE76239),
+                  ),
                 ),
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: screenHeight * 0.04, // Adjust spacing
                 ),
-                const Text(
+                Text(
                   'Why are you here for?',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: subTitleFontSize, // Responsive font size
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: screenHeight * 0.02, // Adjust spacing
                 ),
+                // Radio buttons for role selection
                 ListTile(
-                  title: const Text('Admin',
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.normal)),
+                  title: Text(
+                    'Admin',
+                    style: TextStyle(
+                      fontSize: listTileFontSize, // Responsive font size
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
                   leading: Radio(
                     value: 'admin',
                     groupValue: _role,
@@ -69,9 +85,13 @@ class _ChooseScreenState extends State<ChooseScreen> {
                   ),
                 ),
                 ListTile(
-                  title: const Text('Voter',
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.normal)),
+                  title: Text(
+                    'Voter',
+                    style: TextStyle(
+                      fontSize: listTileFontSize, // Responsive font size
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
                   leading: Radio(
                     value: 'voter',
                     groupValue: _role,
@@ -83,9 +103,13 @@ class _ChooseScreenState extends State<ChooseScreen> {
                   ),
                 ),
                 ListTile(
-                  title: const Text('Candidature',
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.normal)),
+                  title: Text(
+                    'Candidature',
+                    style: TextStyle(
+                      fontSize: listTileFontSize, // Responsive font size
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
                   leading: Radio(
                     value: 'elective',
                     groupValue: _role,
@@ -100,36 +124,44 @@ class _ChooseScreenState extends State<ChooseScreen> {
             ),
             Center(
               child: ElevatedButton(
-                // ignore: unnecessary_null_comparison
                 onPressed: _role == null
                     ? null
                     : () {
                         if (_role == 'admin') {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpScreen(),
+                            ),
+                          );
                         } else if (_role == 'voter') {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VoterSignUpScreen()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VoterSignUpScreen(),
+                            ),
+                          );
                         } else if (_role == 'elective') {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CRSignUpScreen()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CRSignUpScreen(),
+                            ),
+                          );
                         }
                       },
-
-                child: const Text('SUBMIT',
-                    style:
-                        TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
+                child: Text(
+                  'SUBMIT',
+                  style: TextStyle(
+                    fontSize: buttonFontSize, // Responsive font size
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
             ),
-            const SizedBox(
-              height: 100,
-            )
+            SizedBox(
+              height: screenHeight * 0.1, // Adjust bottom spacing
+            ),
           ],
         ),
       ),
