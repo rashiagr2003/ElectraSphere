@@ -3,6 +3,7 @@ import 'package:electra_sphere/Voter%20screens/widgets/choose_cr_widget.dart';
 import 'package:electra_sphere/Voter%20screens/widgets/drawer_page.dart';
 import 'package:electra_sphere/common%20Screens/notification_page.dart';
 import 'package:flutter/material.dart';
+import '../constants/shared_pref.dart'; // Import the SharedPreferences utility
 
 class ChooseCRScreen extends StatefulWidget {
   const ChooseCRScreen({super.key});
@@ -129,6 +130,9 @@ class _ChooseCRScreenState extends State<ChooseCRScreen> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(30),
                     onTap: () {
+                      // Set hasVoted to true when submitting vote
+                      SharedPreferencesUtil.setBool('hasVoted', true);
+
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(

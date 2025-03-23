@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../constants/shared_pref.dart';
 
 class ChooseCRWidget extends StatefulWidget {
@@ -17,48 +16,59 @@ class ChooseCRWidget extends StatefulWidget {
 }
 
 class _ChooseCRWidgetState extends State<ChooseCRWidget> {
-  late List<String> _classRepresentative;
-  late List<String> _promises;
+  List<Map<String, String>> _candidates = [];
 
   @override
   void initState() {
     super.initState();
-    loadDataFromSharedPrefs();
+    _loadCandidatesFromPrefs();
   }
 
-  void loadDataFromSharedPrefs() {
-    // Get the stored names and promises as comma-separated strings
-    String namesString =
-        SharedPreferencesUtil.getString('names', defaultValue: 'Naman,Dhakad');
-    String promisesString = SharedPreferencesUtil.getString('promises',
-        defaultValue: 'I will give my best.,I will try to maintain discipline');
+  Future<void> _loadCandidatesFromPrefs() async {
+    // Get candidate data from SharedPreferences
+    String? namesString = SharedPreferencesUtil.getString('name');
+    String? promisesString = SharedPreferencesUtil.getString('promises');
 
-    // Convert them to lists
-    _classRepresentative = namesString.split(',');
-    _promises = promisesString.split(',');
+    if (namesString != null && promisesString != null) {
+      // Split the strings into lists
+      List<String> names = namesString.split(',');
+      List<String> promises = promisesString.split(',');
 
-    // Ensure both lists have the same length
-    if (_promises.length < _classRepresentative.length) {
-      int diff = _classRepresentative.length - _promises.length;
-      for (int i = 0; i < diff; i++) {
-        _promises.add("No promises available");
+      // Create candidate maps
+      List<Map<String, String>> loadedCandidates = [];
+      for (int i = 0; i < names.length && i < promises.length; i++) {
+        loadedCandidates.add({
+          "name": names[i],
+          "promises": promises[i],
+        });
       }
-    }
 
-    setState(() {});
+      // Update state
+      setState(() {
+        _candidates = loadedCandidates;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_candidates.isEmpty) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return ListView.builder(
-      itemCount: _classRepresentative.length,
+      itemCount: _candidates.length,
       itemBuilder: (context, index) {
-        String crName = _classRepresentative[index];
+        String crName = _candidates[index]["name"]!;
+        String promise = _candidates[index]["promises"]!;
         bool isSelected = widget.selectedCR.contains(crName);
 
         return GestureDetector(
           onTap: () {
             setState(() {
+              // Toggle selection
               if (isSelected) {
                 widget.selectedCR.remove(crName);
               } else {
@@ -120,7 +130,7 @@ class _ChooseCRWidgetState extends State<ChooseCRWidget> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    _promises[index],
+                    promise,
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
