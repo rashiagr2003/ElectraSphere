@@ -1,0 +1,2 @@
+D:/ElectraSphere/android/app/.cxx/Debug/q1p512c4/x86_64/CMakeFiles/edit_cache.dir
+D:/ElectraSphere/android/app/.cxx/Debug/q1p512c4/x86_64/CMakeFiles/rebuild_cache.dir

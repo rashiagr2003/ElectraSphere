@@ -1,6 +1,6 @@
-import 'package:electra_sphere/Candidature%20Screens/cr_sign_up_screen.dart';
-import 'package:electra_sphere/Admin%20screens/sign_up.dart';
-import 'package:electra_sphere/Voter%20screens/sign_up_screen.dart';
+import 'package:electra_sphere/Admin%20screens/login_screen.dart';
+import 'package:electra_sphere/Candidature%20Screens/login_screen.dart';
+import 'package:electra_sphere/Voter%20screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class ChooseScreen extends StatefulWidget {
@@ -11,160 +11,125 @@ class ChooseScreen extends StatefulWidget {
 }
 
 class _ChooseScreenState extends State<ChooseScreen> {
-  var _role;
+  String? _role;
 
   @override
   Widget build(BuildContext context) {
-    // Get screen width and height for responsive design
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    // Adjust font sizes proportionally based on screen size
-    double titleFontSize = screenWidth * 0.08; // 8% of screen width
-    double subTitleFontSize = screenWidth * 0.06; // 6% of screen width
-    double listTileFontSize = screenWidth * 0.06; // 6% of screen width
-    double buttonFontSize = screenWidth * 0.06; // 6% of screen width
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
-        title: Text(
+        title: const Text(
           'ElectraSphere',
-          style: TextStyle(
-            fontSize: titleFontSize, // Responsive font size
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(screenWidth * 0.04), // Proportional padding
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Welcome!',
-                  style: TextStyle(
-                    fontSize: titleFontSize, // Responsive font size
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xffE76239),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            double screenWidth = constraints.maxWidth;
+            double screenHeight = constraints.maxHeight;
+
+            // Define responsive font sizes
+            double titleFontSize = screenWidth * 0.08;
+            double subTitleFontSize = screenWidth * 0.06;
+            double listTileFontSize = screenWidth * 0.05;
+            double buttonFontSize = screenWidth * 0.05;
+
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome!',
+                        style: TextStyle(
+                          fontSize: titleFontSize,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xffE76239),
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.03),
+                      Text(
+                        'Why are you here for?',
+                        style: TextStyle(
+                          fontSize: subTitleFontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.02),
+
+                      // Radio Buttons
+                      _buildRoleOption('Admin', 'admin', listTileFontSize),
+                      _buildRoleOption('Voter', 'voter', listTileFontSize),
+                      _buildRoleOption(
+                          'Candidature', 'elective', listTileFontSize),
+                    ],
                   ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.04, // Adjust spacing
-                ),
-                Text(
-                  'Why are you here for?',
-                  style: TextStyle(
-                    fontSize: subTitleFontSize, // Responsive font size
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.02, // Adjust spacing
-                ),
-                // Radio buttons for role selection
-                ListTile(
-                  title: Text(
-                    'Admin',
-                    style: TextStyle(
-                      fontSize: listTileFontSize, // Responsive font size
-                      fontWeight: FontWeight.normal,
+
+                  // Submit Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _role == null ? null : _navigateToNextScreen,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.015,
+                        ),
+                      ),
+                      child: Text(
+                        'SUBMIT',
+                        style: TextStyle(
+                          fontSize: buttonFontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                  leading: Radio(
-                    value: 'admin',
-                    groupValue: _role,
-                    onChanged: (value) {
-                      setState(() {
-                        _role = value!;
-                      });
-                    },
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    'Voter',
-                    style: TextStyle(
-                      fontSize: listTileFontSize, // Responsive font size
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  leading: Radio(
-                    value: 'voter',
-                    groupValue: _role,
-                    onChanged: (value) {
-                      setState(() {
-                        _role = value!;
-                      });
-                    },
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    'Candidature',
-                    style: TextStyle(
-                      fontSize: listTileFontSize, // Responsive font size
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  leading: Radio(
-                    value: 'elective',
-                    groupValue: _role,
-                    onChanged: (value) {
-                      setState(() {
-                        _role = value!;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Center(
-              child: ElevatedButton(
-                onPressed: _role == null
-                    ? null
-                    : () {
-                        if (_role == 'admin') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SignUpScreen(),
-                            ),
-                          );
-                        } else if (_role == 'voter') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VoterSignUpScreen(),
-                            ),
-                          );
-                        } else if (_role == 'elective') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CRSignUpScreen(),
-                            ),
-                          );
-                        }
-                      },
-                child: Text(
-                  'SUBMIT',
-                  style: TextStyle(
-                    fontSize: buttonFontSize, // Responsive font size
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                  SizedBox(
+                      height: screenHeight * 0.05), // Adjust bottom spacing
+                ],
               ),
-            ),
-            SizedBox(
-              height: screenHeight * 0.1, // Adjust bottom spacing
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
+  }
+
+  // Widget for building role options
+  Widget _buildRoleOption(String title, String value, double fontSize) {
+    return ListTile(
+      title: Text(
+        title,
+        style: TextStyle(fontSize: fontSize),
+      ),
+      leading: Radio<String>(
+        value: value,
+        groupValue: _role,
+        onChanged: (value) {
+          setState(() {
+            _role = value;
+          });
+        },
+      ),
+    );
+  }
+
+  // Function to navigate based on selection
+  void _navigateToNextScreen() {
+    if (_role == 'admin') {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const AdminLoginScreen()));
+    } else if (_role == 'voter') {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => VoterLoginScreen()));
+    } else if (_role == 'elective') {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => CandidatureLoginScreen()));
+    }
   }
 }

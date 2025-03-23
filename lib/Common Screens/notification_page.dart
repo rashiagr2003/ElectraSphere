@@ -19,49 +19,108 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen width and height for responsiveness
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final fontSizeFactor = screenWidth / 375; // Reference width: 375
-    final paddingFactor = screenWidth / 375;
 
     return Scaffold(
-      backgroundColor: Color(0xffE76239),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
           "Notifications",
-          style: TextStyle(color: Colors.black, fontSize: 18 * fontSizeFactor),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: screenWidth * 0.05,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        centerTitle: true,
+        elevation: 4,
       ),
-      body: ListView.builder(
-        itemCount: notifications.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: 8 * paddingFactor, horizontal: 16 * paddingFactor),
-            child: Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ListTile(
-                title: Text(
-                  notifications[index],
-                  style: TextStyle(fontSize: 16 * fontSizeFactor),
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete, color: Color(0xffE76239)),
-                  onPressed: () {
-                    setState(() {
-                      notifications.removeAt(index);
-                    });
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.orange,
+              Color(0xffE76239),
+              Colors.orange, // End Color
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: screenHeight * 0.02,
+            horizontal: screenWidth * 0.05,
+          ),
+          child: notifications.isEmpty
+              ? Center(
+                  child: Text(
+                    "No new notifications!",
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.045,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              : ListView.separated(
+                  itemCount: notifications.length,
+                  separatorBuilder: (context, index) =>
+                      SizedBox(height: screenHeight * 0.015),
+                  itemBuilder: (context, index) {
+                    return Dismissible(
+                      key: Key(notifications[index]),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.05),
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Icon(Icons.delete, color: Colors.white),
+                      ),
+                      onDismissed: (direction) {
+                        setState(() {
+                          notifications.removeAt(index);
+                        });
+                      },
+                      child: Card(
+                        elevation: 6,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: screenHeight * 0.015,
+                            horizontal: screenWidth * 0.04,
+                          ),
+                          title: Text(
+                            notifications[index],
+                            style: TextStyle(
+                              fontSize: screenWidth * 0.045,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete,
+                                color: Color(0xffE76239)),
+                            onPressed: () {
+                              setState(() {
+                                notifications.removeAt(index);
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    );
                   },
                 ),
-              ),
-            ),
-          );
-        },
+        ),
       ),
     );
   }

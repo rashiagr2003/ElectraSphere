@@ -1,0 +1,2 @@
+D:/ElectraSphere/android/app/.cxx/Debug/q1p512c4/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/ElectraSphere/android/app/.cxx/Debug/q1p512c4/armeabi-v7a/CMakeFiles/rebuild_cache.dir

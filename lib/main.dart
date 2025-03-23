@@ -2,8 +2,11 @@ import 'package:electra_sphere/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+import 'constants/shared_pref.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesUtil.init();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(const MyApp());

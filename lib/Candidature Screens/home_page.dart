@@ -1,21 +1,23 @@
-import 'package:electra_sphere/Common%20Screens/result_screen1.dart';
 import 'package:flutter/material.dart';
 import '../Common Screens/notification_page.dart';
-import '../Voter screens/widgets/drawer_page.dart';
+import '../Common Screens/result_screen1.dart';
+import '../constants/shared_pref.dart' show SharedPreferencesUtil;
 
 class CandidatureHomePage extends StatefulWidget {
-  const CandidatureHomePage({super.key});
+  final String name;
+  final String promises;
+  CandidatureHomePage({
+    super.key,
+    required this.name,
+    required this.promises,
+  });
 
   @override
   State<CandidatureHomePage> createState() => _CandidatureHomePageState();
 }
 
 class _CandidatureHomePageState extends State<CandidatureHomePage> {
-  static final List<Map<String, dynamic>> crList = [
-    {'name': 'C.R. 1', 'votes': 45},
-    {'name': 'C.R. 2', 'votes': 60},
-    {'name': 'C.R. 3', 'votes': 50},
-  ];
+  static final List<Map<String, dynamic>> crList = [];
 
   late List<CR> crData;
 
@@ -23,16 +25,16 @@ class _CandidatureHomePageState extends State<CandidatureHomePage> {
   void initState() {
     super.initState();
     crData = _createCRData(crList);
+    SharedPreferencesUtil.setString('name', widget.name);
+    SharedPreferencesUtil.setString('promises', widget.promises);
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      backgroundColor: const Color(0xffE76239),
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: Text(''),
         backgroundColor: Colors.white,
         title: const Center(child: Text('Home')),
         actions: [
@@ -48,145 +50,204 @@ class _CandidatureHomePageState extends State<CandidatureHomePage> {
           ),
         ],
       ),
-      drawer: const DrawerPage(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            vertical: screenHeight * 0.01, horizontal: screenWidth * 0.04),
-        child: SizedBox(
-          height: screenHeight * 0.8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: ((context) => ResultScreen1())),
-                ),
-                child: Card(
-                  surfaceTintColor: Colors.white,
-                  elevation: 5,
-                  child: Padding(
-                    padding: EdgeInsets.all(screenWidth * 0.02),
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.02,
-                          horizontal: screenWidth * 0.04,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: screenHeight * 0.02),
-                              child: SizedBox(
-                                height: screenHeight * 0.07,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.orange,
+                  Color(0xffE76239),
+                  Colors.orange, // End Color
+                ],
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: constraints.maxHeight * 0.02,
+                  horizontal: constraints.maxWidth * 0.05),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Display name passed from previous screen
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(constraints.maxWidth * 0.04),
+                      margin:
+                          EdgeInsets.only(bottom: constraints.maxHeight * 0.02),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 8,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ' ${widget.name}',
+                            style: TextStyle(
+                              fontSize: constraints.maxWidth * 0.05,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: constraints.maxHeight * 0.01),
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(
+                                vertical: constraints.maxHeight * 0.01,
+                                horizontal: constraints.maxWidth * 0.03),
+                            decoration: BoxDecoration(
+                              color: const Color(0xffEEEEEE),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Promises:',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(height: constraints.maxHeight * 0.01),
+                                Text(
+                                  widget.promises,
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: crData.length,
+                        itemBuilder: (context, index) {
+                          return AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            margin: EdgeInsets.only(
+                                bottom: constraints.maxHeight * 0.02),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                ),
+                              ],
+                            ),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ResultScreen1()),
+                                );
+                              },
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(constraints.maxWidth * 0.04),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: screenHeight * 0.008,
-                                        horizontal: screenWidth * 0.025,
-                                      ),
-                                      color: const Color(0xffE76239),
-                                      child: const Text('Class'),
+                                    // Candidate Name and Vote Percentage
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          crData[index].name,
+                                          style: TextStyle(
+                                            fontSize:
+                                                constraints.maxWidth * 0.05,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${crData[index].votes}% votes',
+                                          style: TextStyle(
+                                            fontSize:
+                                                constraints.maxWidth * 0.045,
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: screenHeight * 0.008,
-                                        horizontal: screenWidth * 0.025,
+                                    SizedBox(
+                                        height: constraints.maxHeight * 0.01),
+
+                                    // Progress Bar
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: LinearProgressIndicator(
+                                        value: crData[index].votes / 100,
+                                        minHeight: 8,
+                                        backgroundColor: Colors.grey[300],
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Colors.orange),
                                       ),
-                                      color: const Color(0xffE76239),
-                                      child: const Text('Sec'),
+                                    ),
+
+                                    SizedBox(
+                                        height: constraints.maxHeight * 0.02),
+
+                                    // Promises Section
+                                    Container(
+                                      width: double.infinity,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical:
+                                              constraints.maxHeight * 0.01,
+                                          horizontal:
+                                              constraints.maxWidth * 0.03),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffEEEEEE),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: const Text(
+                                        'Promises',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: screenHeight * 0.02,
-                                horizontal: screenWidth * 0.02,
-                              ),
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemCount: crData.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom: screenHeight * 0.02),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              crData[index].name,
-                                              style: TextStyle(
-                                                fontSize: screenHeight * 0.02,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: screenWidth * 0.5,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                    '${crData[index].votes} % votes',
-                                                    style: TextStyle(
-                                                        fontSize: screenHeight *
-                                                            0.018),
-                                                  ),
-                                                  Text(
-                                                    '[Number of votes]',
-                                                    style: TextStyle(
-                                                        fontSize: screenHeight *
-                                                            0.016),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: screenWidth,
-                                          height: screenHeight * 0.08,
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: screenHeight * 0.008,
-                                            horizontal: screenWidth * 0.025,
-                                          ),
-                                          color: const Color(0xffEEEEEE),
-                                          child: const Text(
-                                            'Promises',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 24,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                                shrinkWrap: true,
-                              ),
-                            ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -200,11 +261,5 @@ class CR {
 }
 
 List<CR> _createCRData(List<Map<String, dynamic>> crList) {
-  List<CR> crData = [];
-
-  for (var cr in crList) {
-    crData.add(CR(cr['name'], cr['votes']));
-  }
-
-  return crData;
+  return crList.map((cr) => CR(cr['name'], cr['votes'])).toList();
 }

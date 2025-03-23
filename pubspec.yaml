@@ -38,6 +38,7 @@ dependencies:
   flutter_dropdown: ^1.0.1+hotfix.1
   dropdown_textfield: ^1.0.8
   pie_chart:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
